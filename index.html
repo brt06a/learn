@@ -12,6 +12,7 @@
       display: flex;
       width: 100vw;
       height: 100vh;
+      scroll-behavior: smooth;
     }
     .slide {
       scroll-snap-align: start;
@@ -33,7 +34,7 @@
   <div class="scroll-container">
     <!-- Slide 1 -->
     <div class="slide">
-      <img src="image1.png" class="w-full h-full object-cover" alt="Plan 1" />
+      <img src="image1.jpg" class="w-full h-full object-cover" alt="Plan 1" />
       <div class="overlay">
         <button class="buy-btn bg-yellow-500 text-black py-2 px-4 rounded-lg font-bold" data-amount="1000">
           Buy Premium ₹10
@@ -81,6 +82,68 @@
       </div>
     </div>
   </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+  <!-- Firebase & Buy Button Logic -->
+  <script>
+    // 1. Firebase config
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // 2. Init Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    let currentUser = null;
+
+    // 3. Auth flow
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        currentUser = user;
+        console.log("Logged in as", user.email);
+      } else {
+        auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+      }
+    });
+
+    // 4. Button Click Handler
+    document.querySelectorAll(".buy-btn").forEach(button => {
+      button.addEventListener("click", async () => {
+        const amount = button.getAttribute("data-amount");
+
+        if (!currentUser) {
+          alert("Please login first.");
+          return;
+        }
+
+        try {
+          await db.collection("premiumPurchases").add({
+            userId: currentUser.uid,
+            email: currentUser.email,
+            planAmount: parseInt(amount),
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+          });
+
+          alert(`Purchase recorded! Proceeding to payment of ₹${amount / 100}.`);
+          // Redirect to your Paytm backend logic here
+
+        } catch (err) {
+          console.error("Error:", err);
+          alert("Something went wrong. Try again.");
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>
