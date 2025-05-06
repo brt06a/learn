@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Premium Plans</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .scroll-container {
+      scroll-snap-type: x mandatory;
+      overflow-x: scroll;
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+    }
+    .slide {
+      scroll-snap-align: start;
+      flex: 0 0 100%;
+      position: relative;
+    }
+    .overlay {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.5);
+      padding: 1rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body class="bg-black text-white m-0 p-0 overflow-hidden">
+
+  <div class="scroll-container">
+    <!-- Slide 1 -->
+    <div class="slide">
+      <img src="image1.jpg" class="w-full h-full object-cover" alt="Plan 1" />
+      <div class="overlay">
+        <button class="buy-btn bg-yellow-500 text-black py-2 px-4 rounded-lg font-bold" data-amount="1000">
+          Buy Premium ₹10
+        </button>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide">
+      <img src="image2.jpg" class="w-full h-full object-cover" alt="Plan 2" />
+      <div class="overlay">
+        <button class="buy-btn bg-gray-300 text-black py-2 px-4 rounded-lg font-bold" data-amount="2000">
+          Buy Premium ₹20
+        </button>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide">
+      <img src="image3.jpg" class="w-full h-full object-cover" alt="Plan 3" />
+      <div class="overlay">
+        <button class="buy-btn bg-yellow-300 text-black py-2 px-4 rounded-lg font-bold" data-amount="5000">
+          Buy Premium ₹50
+        </button>
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide">
+      <img src="image4.jpg" class="w-full h-full object-cover" alt="Plan 4" />
+      <div class="overlay">
+        <button class="buy-btn bg-purple-400 text-black py-2 px-4 rounded-lg font-bold" data-amount="10000">
+          Buy Premium ₹100
+        </button>
+      </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide">
+      <img src="image5.jpg" class="w-full h-full object-cover" alt="Plan 5" />
+      <div class="overlay">
+        <button class="buy-btn bg-blue-400 text-black py-2 px-4 rounded-lg font-bold" data-amount="20000">
+          Buy Premium ₹200
+        </button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
